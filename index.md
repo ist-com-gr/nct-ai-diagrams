@@ -57,3 +57,5 @@ node design/Prerequisites/diagram-lab/tools/verify.mjs
 ```
 
 Οι έλεγχοι ακεραιότητας και browser (προγράμματος περιήγησης) καταγράφονται στο .verification/. Δεν απαιτείται server (διακομιστής) ή σύνδεση CDN για προβολή.
+
+[Telekom components diagrams](telekom-components/index.html)

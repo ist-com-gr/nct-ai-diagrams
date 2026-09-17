@@ -1,16 +1,17 @@
 {
   "repository": "ist-com-gr/NCT-AI",
   "destination": "ist-com-gr/nct-ai-diagrams",
-  "revision": "3737b46fad3ce732f9ad1a98df48fd3ea61e5af5",
+  "revision": "b83199798e25d1312f5fff95a36db386f72bb326",
   "questions": 30,
+  "telekomDiagrams": 8,
   "files": [
     {
       "path": "index.html",
-      "sha256": "0914a74a1367b7fea80dfd2db58d521bf184fceef78b012d48474aad5e879d42"
+      "sha256": "0a95bec86d4b82511fc028c00cda09b54dbceac8ef63201e94269d9a49ca5d04"
     },
     {
       "path": "index.md",
-      "sha256": "f7fa777cc0573152cd8d3f6b9d8d881791c1f863c347a81b113b0e49725750fd"
+      "sha256": "484c5a8b3ef88fbd9721f19e3ca5fba36bb22261c8fa7d2c2f1817cfab2342db"
     },
     {
       "path": "q01-current-target.html",
@@ -251,6 +252,78 @@
     {
       "path": "q30-operating-roles.md",
       "sha256": "50c222aae028f703db8f06e2251394b13155e666f52021d767e2c0674fee4cc9"
+    },
+    {
+      "path": "telekom-components/index.html",
+      "sha256": "90aec98d0eda2cced4cd06b2ed53a4ad6387c17f5e365d8a5407a5159ae67c88"
+    },
+    {
+      "path": "telekom-components/index.md",
+      "sha256": "710f0685868ffe340391d6ef0c9ebe11708f667e7e0a55736963ac9c2c7bc975"
+    },
+    {
+      "path": "telekom-components/01-component-map.html",
+      "sha256": "f29478088bde9a95bdccc8d9c5ae1909ea66c806fe212dcfbdf533840e454be4"
+    },
+    {
+      "path": "telekom-components/01-component-map.md",
+      "sha256": "c48e65493eb1296faf4f3d8d19f436d5227faa02b54ece3b1af601597ef1769a"
+    },
+    {
+      "path": "telekom-components/02-experience-communication.html",
+      "sha256": "7b706ab92791504e90be54a4b3f59335c4dd27c005f1cf9b7df9807938cb7620"
+    },
+    {
+      "path": "telekom-components/02-experience-communication.md",
+      "sha256": "e9d56463e789ff8c2a3ee7533476a1c91b0716c4a753efa830e65c008c0dc257"
+    },
+    {
+      "path": "telekom-components/03-integration-paths.html",
+      "sha256": "2ce56d028f519bf7ea898b8397ece9914c3baffed340ab257599e143143a9530"
+    },
+    {
+      "path": "telekom-components/03-integration-paths.md",
+      "sha256": "3f59f03f9897e7abf2daa53387690041079f24496c04263e8dda916aba47e917"
+    },
+    {
+      "path": "telekom-components/04-temporal-budget.html",
+      "sha256": "b2b69ba033e29e4ede77a86196e3fbc8879f8f760c217ec455275b67b60e2bbf"
+    },
+    {
+      "path": "telekom-components/04-temporal-budget.md",
+      "sha256": "ecc38dfc9feb9527ee56c4f0c2f93554492d63dd7cff81d6d6f64150cc4153ac"
+    },
+    {
+      "path": "telekom-components/05-state-availability.html",
+      "sha256": "e96821ab4a82caee4258cfff7e31aa86aadea86d57ce9493cc1f1dd43a2183ed"
+    },
+    {
+      "path": "telekom-components/05-state-availability.md",
+      "sha256": "a02ab12f28c5bce78534f9d80538d9fdb4bc55941aa639a32f4521f0b737154c"
+    },
+    {
+      "path": "telekom-components/06-installation-decisions.html",
+      "sha256": "75c8a3a9d4637b8ab30fbb9359c710ecd12190a02a229276794512930eecf1e6"
+    },
+    {
+      "path": "telekom-components/06-installation-decisions.md",
+      "sha256": "00f3704d29e546daecdd22eaf276c00615edda40eb31a60b15a4c2351fb6de54"
+    },
+    {
+      "path": "telekom-components/07-nis2-controls.html",
+      "sha256": "6c70f48e7c4876c3112be03d33e27b385f4a86450cff87ac5d9f7af5032c0106"
+    },
+    {
+      "path": "telekom-components/07-nis2-controls.md",
+      "sha256": "bee256545692bd483b64a176d3df53a6bb99ae3fc90f9f9691b2a29279a6057b"
+    },
+    {
+      "path": "telekom-components/08-gdpr-data-scope.html",
+      "sha256": "df9ea573bfe507fee62fcdf73d3e4639a0bee1af87b1f819602c74c11d1c8f67"
+    },
+    {
+      "path": "telekom-components/08-gdpr-data-scope.md",
+      "sha256": "dd0d2522eae9e036d043321d1fa7b43a27bfed2a69e18873e98b33b131b11a4b"
     },
     {
       "path": "source-answers.md",
