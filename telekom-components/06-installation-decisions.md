@@ -1,8 +1,8 @@
 # NCT-AI / Installation Decisions
 
-[Diagram index](index.md) | [Interactive HTML](06-installation-decisions.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Prerequisites/diagram-lab/telekom-components/specs/06-installation-decisions.json)
+[Diagram index](index.md) | [Interactive HTML](06-installation-decisions.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/31b7ec777623d9e3e4b179f82d5df9a16891fcc5/design/Prerequisites/diagram-lab/telekom-components/specs/06-installation-decisions.json)
 
-**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 4, 6, 7. Snapshot: 2026-09-17.
+**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/31b7ec777623d9e3e4b179f82d5df9a16891fcc5/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 4, 6, 7. Snapshot: 2026-09-17.
 
 **View:** Decision dependencies. Hosting, identity, model processing location and artifact storage must be qualified before pilot acceptance.
 
@@ -60,8 +60,8 @@ Arrows mean only the labeled relationship. They do not certify live traffic or a
 
 - Prior technical review (Greek) (`../../../../docs/reviews/2026-09-17-telekom-components-overview-review.gr.md`)
 - Model deployment configuration (`../../../../deploy/azure/bicep/openai.bicep#L105`)
-- [Artifact storage registration](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/src/NCT.AI.Knowledge.Persistence/KnowledgeArtifactStorageRegistration.cs#L41)
-- [Identity group verification](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/src/NCT.AI.AgUi.Web/Authentication/GraphGroupMembershipVerifier.cs#L60)
+- [Artifact storage registration](https://github.com/ist-com-gr/NCT-AI/blob/31b7ec777623d9e3e4b179f82d5df9a16891fcc5/src/NCT.AI.Knowledge.Persistence/KnowledgeArtifactStorageRegistration.cs#L41)
+- [Identity group verification](https://github.com/ist-com-gr/NCT-AI/blob/31b7ec777623d9e3e4b179f82d5df9a16891fcc5/src/NCT.AI.AgUi.Web/Authentication/GraphGroupMembershipVerifier.cs#L60)
 
 ## Source Snapshot
 

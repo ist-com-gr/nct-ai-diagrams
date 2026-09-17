@@ -1,7 +1,7 @@
 {
   "repository": "ist-com-gr/NCT-AI",
   "destination": "ist-com-gr/nct-ai-diagrams",
-  "revision": "889128d85af7dcf478c9651e89df05d1288ec825",
+  "revision": "31b7ec777623d9e3e4b179f82d5df9a16891fcc5",
   "questions": 30,
   "telekomDiagrams": 9,
   "files": [
@@ -255,11 +255,11 @@
     },
     {
       "path": "telekom-components/index.html",
-      "sha256": "bcaa6a8ffa0d6eb73bb0f1ad6408912e05148f3b437a0a329715c51658b7f16b"
+      "sha256": "fbf0a72db3474ec2ed883d3cb02682a1674e651d4191cbeb85dbfdb24444204a"
     },
     {
       "path": "telekom-components/index.md",
-      "sha256": "430f3e71110ba2076b9936a76c75e3dc4fa4d1cd7a2b418a1e9fcf55bf351b13"
+      "sha256": "224e4f1e0e696b6edf7cc8bbbae5ed11794ecff69ed35f670d204e470fe4f5c6"
     },
     {
       "path": "telekom-components/01-component-map.html",
@@ -267,7 +267,7 @@
     },
     {
       "path": "telekom-components/01-component-map.md",
-      "sha256": "5d6b70966cde10378507b119c0724b709267c6d442454aa4a351a0d0aa84ee89"
+      "sha256": "ebcc952c99c42dbfc25a6e7acd71a164977876c02467bcf96248b37df56836df"
     },
     {
       "path": "telekom-components/02-experience-communication.html",
@@ -275,7 +275,7 @@
     },
     {
       "path": "telekom-components/02-experience-communication.md",
-      "sha256": "9177db74551d352792eadaa20c29c287e0ac9c6499cf196b793c2fc179e4790b"
+      "sha256": "29afde354f4031a1d81bed2c73b89acc6ca13ffb9c10bd172fabfae913c6fe80"
     },
     {
       "path": "telekom-components/03-integration-paths.html",
@@ -283,7 +283,15 @@
     },
     {
       "path": "telekom-components/03-integration-paths.md",
-      "sha256": "3cd3c355d3ae2b6a73969667bfa2f1c77a554766d6a7025a62519745ad70f946"
+      "sha256": "854770015eb858fdcfa6994ccd3a4646c3dcc3d190340b6b67d9800de3d0ee98"
+    },
+    {
+      "path": "telekom-components/09-complete-communications.html",
+      "sha256": "6e07c8bcd18df79203a9a5b728c02a156803643861e3cb67e8cf55d322a9ccab"
+    },
+    {
+      "path": "telekom-components/09-complete-communications.md",
+      "sha256": "d1c2bac6fa2ed4ea1865f38e9e2477decab5a652d7cc5094706259ed2320cf6c"
     },
     {
       "path": "telekom-components/04-temporal-budget.html",
@@ -291,7 +299,7 @@
     },
     {
       "path": "telekom-components/04-temporal-budget.md",
-      "sha256": "566715f98568b037281d051bca35ecb207e0f8e40c64225d11c1d52061aba0a2"
+      "sha256": "def3128e0212cbdb6e6cceb144cef82dd77122c104dbd364ef37caf52d3f446c"
     },
     {
       "path": "telekom-components/05-state-availability.html",
@@ -299,7 +307,7 @@
     },
     {
       "path": "telekom-components/05-state-availability.md",
-      "sha256": "b385f4a964f9e59746dc58f8508486125df456baf73f4bc80c9a7e8c0d098986"
+      "sha256": "f64db8dd43045fa8dcdab9107306ca04f23eb4db1436ec4e5dee1ae975fb8b25"
     },
     {
       "path": "telekom-components/06-installation-decisions.html",
@@ -307,7 +315,7 @@
     },
     {
       "path": "telekom-components/06-installation-decisions.md",
-      "sha256": "baf28f09785e4db63f3ed9c3b82a633945e94c980e26b499b7f6b3615c2fa3bb"
+      "sha256": "7597b59a781561b20c6d0db24ea491d251b49d159e018e12a0a43c4166fff8c3"
     },
     {
       "path": "telekom-components/07-nis2-controls.html",
@@ -315,7 +323,7 @@
     },
     {
       "path": "telekom-components/07-nis2-controls.md",
-      "sha256": "7532735c4f686c165f749fa1140c34da5b92062888c82ddd251cb07a92dee14d"
+      "sha256": "ca21cf2ec2d9f0ee57e25e1d9d754ea391981d0cccfeae2d4161df65e88219dd"
     },
     {
       "path": "telekom-components/08-gdpr-data-scope.html",
@@ -323,15 +331,7 @@
     },
     {
       "path": "telekom-components/08-gdpr-data-scope.md",
-      "sha256": "f545f28cb77e452f4b3905c649208696992c014b5c588e06cd1ecfc20ac04d92"
-    },
-    {
-      "path": "telekom-components/09-complete-communications.html",
-      "sha256": "dbd170a042fce7db52126363a98745b07c9197ebdbbb171230806d140fe1fca6"
-    },
-    {
-      "path": "telekom-components/09-complete-communications.md",
-      "sha256": "05b75dd8ec49ecd4b7af8496a250863cd60371a4864286e3f7d06a69870f1c47"
+      "sha256": "ecb1c24219e6be7bd57e3090f5bf3e7e208a1d6b007444cc4cc610a156eea5c5"
     },
     {
       "path": "source-answers.md",

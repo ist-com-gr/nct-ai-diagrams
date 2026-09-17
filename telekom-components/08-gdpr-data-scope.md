@@ -1,8 +1,8 @@
 # NCT-AI / GDPR Data Scope
 
-[Diagram index](index.md) | [Interactive HTML](08-gdpr-data-scope.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Prerequisites/diagram-lab/telekom-components/specs/08-gdpr-data-scope.json)
+[Diagram index](index.md) | [Interactive HTML](08-gdpr-data-scope.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/31b7ec777623d9e3e4b179f82d5df9a16891fcc5/design/Prerequisites/diagram-lab/telekom-components/specs/08-gdpr-data-scope.json)
 
-**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 6, 7. Snapshot: 2026-09-17.
+**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/31b7ec777623d9e3e4b179f82d5df9a16891fcc5/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 6, 7. Snapshot: 2026-09-17.
 
 **View:** Governance model. Classify technical data separately from engineer-linked activity, conversation content and provider disclosures.
 

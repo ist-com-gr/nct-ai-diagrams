@@ -1,8 +1,8 @@
 # NCT-AI / State and Availability
 
-[Diagram index](index.md) | [Interactive HTML](05-state-availability.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Prerequisites/diagram-lab/telekom-components/specs/05-state-availability.json)
+[Diagram index](index.md) | [Interactive HTML](05-state-availability.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/31b7ec777623d9e3e4b179f82d5df9a16891fcc5/design/Prerequisites/diagram-lab/telekom-components/specs/05-state-availability.json)
 
-**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 2. Snapshot: 2026-09-17.
+**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/31b7ec777623d9e3e4b179f82d5df9a16891fcc5/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 2. Snapshot: 2026-09-17.
 
 **View:** Pilot target. Replica placement, durable data, Redis keys and active sessions have distinct failure and recovery requirements.
 

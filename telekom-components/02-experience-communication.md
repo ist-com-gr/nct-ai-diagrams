@@ -1,8 +1,8 @@
 # NCT-AI / Experience Communication
 
-[Diagram index](index.md) | [Interactive HTML](02-experience-communication.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Prerequisites/diagram-lab/telekom-components/specs/02-experience-communication.json)
+[Diagram index](index.md) | [Interactive HTML](02-experience-communication.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/31b7ec777623d9e3e4b179f82d5df9a16891fcc5/design/Prerequisites/diagram-lab/telekom-components/specs/02-experience-communication.json)
 
-**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 1, 3. Snapshot: 2026-09-17.
+**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/31b7ec777623d9e3e4b179f82d5df9a16891fcc5/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 1, 3. Snapshot: 2026-09-17.
 
 **View:** Selected calls. The BFF calls several backends directly; API is not a universal transit hop.
 
