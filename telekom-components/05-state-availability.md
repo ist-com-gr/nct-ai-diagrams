@@ -1,8 +1,8 @@
 # NCT-AI / State and Availability
 
-[Diagram index](index.md) | [Interactive HTML](05-state-availability.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/b83199798e25d1312f5fff95a36db386f72bb326/design/Prerequisites/diagram-lab/telekom-components/specs/05-state-availability.json)
+[Diagram index](index.md) | [Interactive HTML](05-state-availability.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Prerequisites/diagram-lab/telekom-components/specs/05-state-availability.json)
 
-**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/b83199798e25d1312f5fff95a36db386f72bb326/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 2. Snapshot: 2026-09-17.
+**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 2. Snapshot: 2026-09-17.
 
 **View:** Pilot target. Replica placement, durable data, Redis keys and active sessions have distinct failure and recovery requirements.
 
@@ -67,29 +67,30 @@ Each of the 15 NCT-AI components above runs as its own Kubernetes
 Deployment, minimum **2 replicas** (figures below are per-replica;
 multiply by 2 for the Deployment total):
 
-| Service | Replicas | CPU request (ea.) | Memory request (ea.) | CPU limit (ea.) | Memory limit (ea.) |
-|---|---|---|---|---|---|
-| AG-UI | 2 | 100m | 256Mi | 1 | 1Gi |
-| AG-UI (Web) | 2 | 100m | 256Mi | 1 | 1Gi |
-| API / BFF | 2 | 100m | 256Mi | 1 | 1Gi |
-| Chat | 2 | 100m | 512Mi | 1 | 1.5Gi |
-| Runtime | 2 | 100m | 256Mi | 1 | 1Gi |
-| Policy | 2 | 100m | 256Mi | 1 | 1Gi |
-| Context | 2 | 100m | 256Mi | 1 | 1Gi |
-| Knowledge | 2 | 100m | 256Mi | 1 | 1Gi |
-| Compiler | 2 | 100m | 256Mi | 1 | 1Gi |
-| Ingestion | 2 | 100m | 256Mi | 1 | 1Gi |
-| Publisher | 2 | 100m | 256Mi | 1 | 1Gi |
-| Memory | 2 | 100m | 256Mi | 1 | 1Gi |
-| Models | 2 | 100m | 256Mi | 1 | 1Gi |
-| Oracle MCP | 2 | 100m | 256Mi | 1 | 1Gi |
-| Workflow | 2 | 100m | 256Mi | 1 | 1Gi |
-| **Subtotal (30 NCT-AI pods)** | **30** | **~3 CPU** | **8 GiB** | **~30 CPU** | **31 GiB** |
+
+| Service                       | Replicas | CPU request (ea.) | Memory request (ea.) | CPU limit (ea.) | Memory limit (ea.) |
+| ----------------------------- | -------- | ----------------- | -------------------- | --------------- | ------------------ |
+| AG-UI                         | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| AG-UI (Web)                   | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| API / BFF                     | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| Chat                          | 2        | 100m              | 512Mi                | 1               | 1.5Gi              |
+| Runtime                       | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| Policy                        | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| Context                       | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| Knowledge                     | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| Compiler                      | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| Ingestion                     | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| Publisher                     | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| Memory                        | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| Models                        | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| Oracle MCP                    | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| Workflow                      | 2        | 100m              | 256Mi                | 1               | 1Gi                |
+| **Subtotal (30 NCT-AI pods)** | **30**   | **\~3 CPU**       | **8 GiB**            | **\~30 CPU**    | **31 GiB**         |
+
 
 ⛔ **Temporal is 6 roles — checked against the live cluster directly,
 not the Helm values file.** `temporal/temporal` is
-installed with no chart version pinned (`helm upgrade --install
-temporal temporal/temporal`, no `--version`), and the official chart
+installed with no chart version pinned (`helm upgrade --install temporal temporal/temporal`, no `--version`), and the official chart
 creates one Deployment **per active server role**, not one combined
 process. `kubectl get deploy -n temporal` on the dev cluster confirms
 exactly that — 6 Deployments, each 1 replica today:
@@ -113,18 +114,20 @@ CPU/0.5Gi on History* since that failure is the one hard data point
 this search produced. Treat as a starting point to load-test, not a
 Temporal-endorsed number:
 
-| Temporal role | Replicas (pilot floor) | CPU/Memory request (ea.) | CPU/Memory limit (ea.) |
-|---|---|---|---|
-| Frontend | 2 | 500m / 1Gi | 1 / 2Gi |
-| History | 2 | 1 / 2Gi | 2 / 4Gi |
-| Matching | 2 | 500m / 1Gi | 1 / 2Gi |
-| Worker (server-side) | 2 | 500m / 1Gi | 1 / 2Gi |
-| Web UI | 2 | 250m / 512Mi | 500m / 1Gi |
-| Admin tools | 2 | 100m / 256Mi | 250m / 512Mi |
-| **Subtotal (12 pods)** | **12** | **~5.7 CPU / 11.5 GiB** | **~11.5 CPU / 23 GiB** |
 
-**Total application budget, this table plus § above: 42 pods, ~8.7
-CPU / 19.5 GiB requested, ~41.5 CPU / 54 GiB at limit** — still
+| Temporal role          | Replicas (pilot floor) | CPU/Memory request (ea.) | CPU/Memory limit (ea.)  |
+| ---------------------- | ---------------------- | ------------------------ | ----------------------- |
+| Frontend               | 2                      | 500m / 1Gi               | 1 / 2Gi                 |
+| History                | 2                      | 1 / 2Gi                  | 2 / 4Gi                 |
+| Matching               | 2                      | 500m / 1Gi               | 1 / 2Gi                 |
+| Worker (server-side)   | 2                      | 500m / 1Gi               | 1 / 2Gi                 |
+| Web UI                 | 2                      | 250m / 512Mi             | 500m / 1Gi              |
+| Admin tools            | 2                      | 100m / 256Mi             | 250m / 512Mi            |
+| **Subtotal (12 pods)** | **12**                 | **\~5.7 CPU / 11.5 GiB** | **\~11.5 CPU / 23 GiB** |
+
+
+**Total application budget, this table plus § above: 42 pods, \~8.7
+CPU / 19.5 GiB requested, \~41.5 CPU / 54 GiB at limit** — still
 excluding every operational add-on named at the top of this section.
 
 Every application pod (NCT-AI and Temporal alike) also carries an
@@ -134,13 +137,15 @@ CPU/memory, and is not evidence either way about sidecar cost.
 
 **PostgreSQL — one instance, two databases:**
 
-| | Baseline | Larger baseline |
-|---|---|---|
-| Instance vCPU | 8 | 16 |
-| Instance RAM | 32 GB | 64 GB |
-| Instance storage | 500 GB SSD | 1 TB+ SSD |
+
+|                                                       | Baseline                | Larger baseline          |
+| ----------------------------------------------------- | ----------------------- | ------------------------ |
+| Instance vCPU                                         | 8                       | 16                       |
+| Instance RAM                                          | 32 GB                   | 64 GB                    |
+| Instance storage                                      | 500 GB SSD              | 1 TB+ SSD                |
 | `nct_ai` (relational + `pgvector` + Apache AGE graph) | 6 vCPU / 24 GB / 400 GB | 12 vCPU / 48 GB / 800 GB |
-| `nct_temporal` (Temporal persistence) | 2 vCPU / 8 GB / 100 GB | 4 vCPU / 16 GB / 200 GB |
+| `nct_temporal` (Temporal persistence)                 | 2 vCPU / 8 GB / 100 GB  | 4 vCPU / 16 GB / 200 GB  |
+
 
 Primary/standby HA where required, with backup capacity kept separate
 from primary data capacity. `nct_ai` carries the bulk of the load
@@ -152,22 +157,24 @@ not a hard partition — re-derive from measured load per database.
 
 **Redis:**
 
-| | Baseline | Higher load |
-|---|---|---|
-| vCPU | 2–4 | 4–8 |
-| RAM | 8–16 GB | 16–32 GB |
+
+|      | Baseline | Higher load |
+| ---- | -------- | ----------- |
+| vCPU | 2–4      | 4–8         |
+| RAM  | 8–16 GB  | 16–32 GB    |
+
 
 ⛔ **Correction: not all-ephemeral.** Cache and rate-limit counters are
 reconstructible without cost. Two keys are not:
 
 - **AG-UI (Web)'s Data Protection key ring** (`nct-ai:agui:dataprotection-keys`)
-  — also protects cookies and the encrypted MSAL token cache. Losing it
-  invalidates every live session and forces re-authentication.
+— also protects cookies and the encrypted MSAL token cache. Losing it
+invalidates every live session and forces re-authentication.
 - **API's idempotency records** (`RedisApiIdempotencyStore`) — if a key
-  is evicted or lost, a retried request can be treated as new. This
-  does not by itself prove a duplicate write reaches NCTSite; a
-  downstream service may still catch it, but the API's own
-  duplicate-suppression window is gone.
+is evicted or lost, a retried request can be treated as new. This
+does not by itself prove a duplicate write reaches NCTSite; a
+downstream service may still catch it, but the API's own
+duplicate-suppression window is gone.
 
 Separate reconstructible cache from operationally-critical keys, and
 agree retention/expiry/eviction/recovery per category, with durable

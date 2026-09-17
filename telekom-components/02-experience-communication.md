@@ -1,8 +1,8 @@
 # NCT-AI / Experience Communication
 
-[Diagram index](index.md) | [Interactive HTML](02-experience-communication.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/b83199798e25d1312f5fff95a36db386f72bb326/design/Prerequisites/diagram-lab/telekom-components/specs/02-experience-communication.json)
+[Diagram index](index.md) | [Interactive HTML](02-experience-communication.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Prerequisites/diagram-lab/telekom-components/specs/02-experience-communication.json)
 
-**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/b83199798e25d1312f5fff95a36db386f72bb326/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 1, 3. Snapshot: 2026-09-17.
+**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 1, 3. Snapshot: 2026-09-17.
 
 **View:** Selected calls. The BFF calls several backends directly; API is not a universal transit hop.
 
@@ -66,26 +66,28 @@ The following excerpt is attributed to the source document, not newly verified l
 
 Telekom's pilot covers **every** component (no use case is excluded):
 
-| Layer             | Component             | Role for Telekom                                              |
-| ----------------- | --------------------- | ------------------------------------------------------------- |
-| **Experience**    | AG-UI (BFF)           | Backend-for-frontend — calls Runtime, Workflow, Knowledge, Chat, Models and API directly, each for its own concern |
-|                   | AG-UI (Web)           | Engineer-facing console — the surface Telekom staff use       |
+
+| Layer             | Component             | Role for Telekom                                                                                                                              |
+| ----------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Experience**    | AG-UI (BFF)           | Backend-for-frontend — calls Runtime, Workflow, Knowledge, Chat, Models and API directly, each for its own concern                            |
+|                   | AG-UI (Web)           | Engineer-facing console — the surface Telekom staff use                                                                                       |
 |                   | API                   | Agent/run management surface (create, review, approve, cancel) — one of several backends AG-UI calls, not a gateway everything passes through |
-|                   | Chat                  | Conversational entry point, governed tool-calling — executes its own model calls in-process |
-| **Agent Runtime** | Runtime               | Executes agents (including PoTP/MUX recommendations)          |
-|                   | Workflow              | Hosts/exposes the Temporal workflow definitions to the rest of the platform |
-|                   | Policy                | Governance rule library, consumed **in-process** by other hosts — not a network hop every action crosses |
-|                   | Context               | Assembles what an agent is allowed to see                     |
-| **Knowledge**     | Knowledge             | Registry of published knowledge bundles                       |
-|                   | Compiler              | Turns Telekom's raw sources into OKF bundles                  |
-|                   | Ingestion             | Pulls/normalizes Telekom's source material                    |
-|                   | Publisher             | Publishes approved bundles for use                            |
-| **Memory**        | Memory                | Cognitive memory capabilities (semantic/episodic) — chat conversation history is Chat's own store, not routed through here |
-| **Models**        | Models                | Model routing/accounting — model provider is Telekom's choice |
-| **Integration**   | Oracle MCP            | Governed, read-only access to NCTSite's Oracle data           |
-| **Orchestration** | Temporal              | Durable workflows — retries, human approvals                  |
-| **Data tier**     | PostgreSQL + pgvector | Relational + vector + graph store (single instance)           |
-|                   | Redis                 | Cache, session state                                          |
+|                   | Chat                  | Conversational entry point, governed tool-calling — executes its own model calls in-process                                                   |
+| **Agent Runtime** | Runtime               | Executes agents (including PoTP/MUX recommendations)                                                                                          |
+|                   | Workflow              | Hosts/exposes the Temporal workflow definitions to the rest of the platform                                                                   |
+|                   | Policy                | Governance rule library, consumed **in-process** by other hosts — not a network hop every action crosses                                      |
+|                   | Context               | Assembles what an agent is allowed to see                                                                                                     |
+| **Knowledge**     | Knowledge             | Registry of published knowledge bundles                                                                                                       |
+|                   | Compiler              | Turns Telekom's raw sources into OKF bundles                                                                                                  |
+|                   | Ingestion             | Pulls/normalizes Telekom's source material                                                                                                    |
+|                   | Publisher             | Publishes approved bundles for use                                                                                                            |
+| **Memory**        | Memory                | Cognitive memory capabilities (semantic/episodic) — chat conversation history is Chat's own store, not routed through here                    |
+| **Models**        | Models                | Model routing/accounting — model provider is Telekom's choice                                                                                 |
+| **Integration**   | Oracle MCP            | Governed, read-only access to NCTSite's Oracle data                                                                                           |
+| **Orchestration** | Temporal              | Durable workflows — retries, human approvals                                                                                                  |
+| **Data tier**     | PostgreSQL + pgvector | Relational + vector + graph store (single instance)                                                                                           |
+|                   | Redis                 | Cache, session state                                                                                                                          |
+
 
 ⚠️ **15 Deployments does not mean 15 network hops on every business
 action.** Some rows above are libraries consumed **in-process** by the
@@ -101,32 +103,35 @@ verified artifact.
 Verified against the code (`gen-manifests.sh`'s service list for PostgreSQL wiring, `Program.cs` for
 Redis/Temporal/HTTP clients — not inferred from the architecture diagram):
 
-| Component | Talks to | Protocol / technology |
-|---|---|---|
-| AG-UI (BFF) | Runtime, Workflow, Knowledge, Chat, Models, API | HTTP/JSON over the Istio mesh (mTLS between sidecars) |
-| AG-UI (BFF) | PostgreSQL (`nct_ai`) | Npgsql/EF Core, TCP 5432, TLS |
-| AG-UI (Web) | AG-UI (BFF) | HTTPS, browser-facing |
-| AG-UI (Web) | Redis | StackExchange.Redis, TCP — corrected: this row was missed in the first pass |
-| API | PostgreSQL (`nct_ai`, vector) | Npgsql/EF Core, TCP 5432, TLS |
-| API | Redis | StackExchange.Redis (RESP), TCP |
-| Chat | PostgreSQL (`nct_ai`) | Npgsql/EF Core, TCP 5432, TLS — conversation store |
-| Chat | Redis | StackExchange.Redis, TCP |
-| Chat | Model provider | HTTPS, called **in-process** — no hop to the Models pod |
-| Runtime | PostgreSQL (`nct_ai`) | Npgsql/EF Core, TCP 5432, TLS |
-| Runtime | Temporal | gRPC (Temporal .NET SDK), TLS |
-| Runtime | Oracle MCP | HTTP (MCP protocol), over the Istio mesh |
-| Workflow | PostgreSQL (`nct_ai`) | Npgsql/EF Core, TCP 5432, TLS |
-| Workflow | Temporal | gRPC (Temporal .NET SDK worker), TLS |
-| Workflow | Ingestion, Compiler, Publisher | HTTP, over the Istio mesh — the EKC (Knowledge Compiler) pipeline stage client |
-| Context | PostgreSQL (`nct_ai`, vector) | Npgsql/EF Core, TCP 5432, TLS |
-| Context | Redis | StackExchange.Redis, TCP |
-| Knowledge | PostgreSQL (`nct_ai`, vector) | Npgsql/EF Core, TCP 5432, TLS |
-| Knowledge | Publisher | HTTP, over the Istio mesh |
-| Memory | PostgreSQL (`nct_ai`) | Npgsql/EF Core, TCP 5432, TLS |
-| Oracle MCP | PostgreSQL (`nct_ai`) | Npgsql/EF Core, TCP 5432, TLS — dataset audit |
-| Oracle MCP | NCTSITE Oracle ADB | Oracle Net (ODP.NET), TCP 1522, mTLS via wallet |
-| Models | Model provider | HTTPS |
-| Compiler, Ingestion, Publisher | *(none — inbound only)* | Expose HTTP endpoints (`/compile`, `/ingest`, `/publish`, etc.); make no outbound calls of their own |
+
+| Component                      | Talks to                                        | Protocol / technology                                                                                |
+| ------------------------------ | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| AG-UI (BFF)                    | Runtime, Workflow, Knowledge, Chat, Models, API | HTTP/JSON over the Istio mesh (mTLS between sidecars)                                                |
+| AG-UI (BFF)                    | PostgreSQL (`nct_ai`)                           | Npgsql/EF Core, TCP 5432, TLS                                                                        |
+| AG-UI (Web)                    | AG-UI (BFF)                                     | HTTPS, browser-facing                                                                                |
+| AG-UI (Web)                    | Redis                                           | StackExchange.Redis, TCP — corrected: this row was missed in the first pass                          |
+| API                            | PostgreSQL (`nct_ai`, vector)                   | Npgsql/EF Core, TCP 5432, TLS                                                                        |
+| API                            | Redis                                           | StackExchange.Redis (RESP), TCP                                                                      |
+| Chat                           | PostgreSQL (`nct_ai`)                           | Npgsql/EF Core, TCP 5432, TLS — conversation store                                                   |
+| Chat                           | Redis                                           | StackExchange.Redis, TCP                                                                             |
+| Chat                           | Model provider                                  | HTTPS, called **in-process** — no hop to the Models pod                                              |
+| Runtime                        | PostgreSQL (`nct_ai`)                           | Npgsql/EF Core, TCP 5432, TLS                                                                        |
+| Runtime                        | Temporal                                        | gRPC (Temporal .NET SDK), TLS                                                                        |
+| Runtime                        | Oracle MCP                                      | HTTP (MCP protocol), over the Istio mesh                                                             |
+| Workflow                       | PostgreSQL (`nct_ai`)                           | Npgsql/EF Core, TCP 5432, TLS                                                                        |
+| Workflow                       | Temporal                                        | gRPC (Temporal .NET SDK worker), TLS                                                                 |
+| Workflow                       | Ingestion, Compiler, Publisher                  | HTTP, over the Istio mesh — the EKC (Knowledge Compiler) pipeline stage client                       |
+| Context                        | PostgreSQL (`nct_ai`, vector)                   | Npgsql/EF Core, TCP 5432, TLS                                                                        |
+| Context                        | Redis                                           | StackExchange.Redis, TCP                                                                             |
+| Knowledge                      | PostgreSQL (`nct_ai`, vector)                   | Npgsql/EF Core, TCP 5432, TLS                                                                        |
+| Knowledge                      | Publisher                                       | HTTP, over the Istio mesh                                                                            |
+| Memory                         | PostgreSQL (`nct_ai`)                           | Npgsql/EF Core, TCP 5432, TLS                                                                        |
+| Oracle MCP                     | PostgreSQL (`nct_ai`)                           | Npgsql/EF Core, TCP 5432, TLS — dataset audit                                                        |
+| Oracle MCP                     | NCTSITE Oracle ADB                              | Oracle Net (ODP.NET), TCP 1522, mTLS via wallet                                                      |
+| Models                         | Model provider                                  | HTTPS                                                                                                |
+| Compiler, Ingestion, Publisher | *(none — inbound only)*                         | Expose HTTP endpoints (`/compile`, `/ingest`, `/publish`, etc.); make no outbound calls of their own |
+|                                |                                                 |                                                                                                      |
+
 
 ⚠️ **Fully verified this pass**, including the three components
 flagged unconfirmed before: Policy makes no network calls (in-process
@@ -135,7 +140,6 @@ called by Workflow's EKC stage client and (Publisher only) by
 Knowledge, and make no outbound calls themselves; Temporal is reached
 by exactly two hosts, Runtime and Workflow (`TemporalClient`/worker),
 confirmed by grep, no others.
-
 
 ⚠️ **Every pod-to-pod HTTP call above rides the Istio mesh**, so it is
 mTLS-encrypted regardless of the row not repeating it. PostgreSQL,

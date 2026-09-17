@@ -1,34 +1,44 @@
-# NCT-AI / Integration Paths
+# Complete Component Communications
 
-[Diagram index](index.md) | [Interactive HTML](03-integration-paths.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Prerequisites/diagram-lab/telekom-components/specs/03-integration-paths.json)
+[Diagram index](index.md) | [Interactive HTML](09-complete-communications.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Prerequisites/diagram-lab/telekom-components/specs/09-complete-communications.json)
 
 **Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 3. Snapshot: 2026-09-17.
 
-**View:** Selected calls. Operational reads, Temporal workers, knowledge-stage calls and in-process model execution are separate paths.
+**View:** Complete communication map. Every connection in section 3: 30 directed links across 19 participants, grouped into protocol lanes with every caller and target named.
 
 ## Text Diagram
 
 ```text
-[runtime] Runtime
-  --- HTTP / MCP --> [oracle-mcp] Oracle MCP
-
-[oracle-mcp] Oracle MCP
-  --- 1522 / mTLS --> [oracle] NCTSite Oracle ADB
-
-[runtime] Runtime
-  --- gRPC / TLS --> [temporal] Temporal
-
-[workflow] Workflow
-  --- gRPC / TLS --> [temporal] Temporal
-
-[workflow] Workflow
-  --- HTTP / EKC --> [ekc-stages] Knowledge stages
-
-[chat] Chat
-  --- in-process --> [model-core] Models.Core
-
-[model-core] Models.Core
-  --- HTTPS --> [provider] Model provider
+AG-UI Web -- HTTPS --> AG-UI BFF
+AG-UI BFF -- HTTP/JSON / mesh --> Runtime
+AG-UI BFF -- HTTP/JSON / mesh --> Workflow
+AG-UI BFF -- HTTP/JSON / mesh --> Knowledge
+AG-UI BFF -- HTTP/JSON / mesh --> Chat
+AG-UI BFF -- HTTP/JSON / mesh --> Models
+AG-UI BFF -- HTTP/JSON / mesh --> API
+AG-UI BFF -- SQL / TLS :5432 --> PostgreSQL
+API -- SQL / TLS :5432 --> PostgreSQL
+Chat -- SQL / TLS :5432 --> PostgreSQL
+Runtime -- SQL / TLS :5432 --> PostgreSQL
+Workflow -- SQL / TLS :5432 --> PostgreSQL
+Context -- SQL / TLS :5432 --> PostgreSQL
+Knowledge -- SQL / TLS :5432 --> PostgreSQL
+Memory -- SQL / TLS :5432 --> PostgreSQL
+Oracle MCP -- SQL / TLS :5432 --> PostgreSQL
+AG-UI Web -- RESP / TCP --> Redis
+API -- RESP / TCP --> Redis
+Chat -- RESP / TCP --> Redis
+Context -- RESP / TCP --> Redis
+Runtime -- gRPC / TLS --> Temporal
+Workflow -- gRPC / TLS --> Temporal
+Runtime -- HTTP / MCP --> Oracle MCP
+Oracle MCP -- 1522 / mTLS --> NCTSITE Oracle ADB
+Workflow -- HTTP / mesh --> Ingestion
+Workflow -- HTTP / mesh --> Compiler
+Workflow -- HTTP / mesh --> Publisher
+Knowledge -- HTTP / mesh --> Publisher
+Chat -- HTTPS --> Model provider
+Models -- HTTPS --> Model provider
 ```
 
 Arrows mean only the labeled relationship. They do not certify live traffic or a complete request trace.
@@ -37,36 +47,49 @@ Arrows mean only the labeled relationship. They do not certify live traffic or a
 
 | ID | Component | Context | Status / grouping |
 |---|---|---|---|
-| runtime | Runtime | PoTP / MUX agent execution | Source-described |
-| oracle-mcp | Oracle MCP | SELECT-only / allowlisted access | Source-described |
-| oracle | NCTSite Oracle ADB | External operational data | Source-described |
-| temporal | Temporal | Durable execution and retries | Source-described |
-| workflow | Workflow | Knowledge workflow host | Source-described |
-| ekc-stages | Knowledge stages | Ingestion / Compiler / Publisher | 3 HOSTS |
-| chat | Chat | Conversation execution host | Source-described |
-| model-core | Models.Core | Router / policy / provider adapter | INSIDE CHAT |
-| provider | Model provider | Azure OpenAI implemented today | Source-described |
+| web | AG-UI Web | Browser-facing experience | Source-described |
+| browser_bff | AG-UI BFF | Experience backend | Source-described |
+| bff | AG-UI BFF | Direct backend calls | Source-described |
+| bff_targets | Runtime / Workflow / Knowledge | Chat / Models / API | ALL 6 TARGETS |
+| pg_clients | BFF / API / Chat / Runtime / Workflow | Context / Knowledge / Memory / Oracle MCP | ALL 9 CLIENTS |
+| postgres | PostgreSQL / nct_ai | Npgsql / EF Core / vector | Source-described |
+| redis_clients | AG-UI Web / API / Chat / Context | StackExchange.Redis | ALL 4 CLIENTS |
+| redis | Redis | Cache / sessions | Source-described |
+| temporal_clients | Runtime / Workflow | Temporal .NET SDK / Workflow worker | BOTH CLIENTS |
+| temporal | Temporal | Durable orchestration | Source-described |
+| runtime | Runtime | Operational reads | Source-described |
+| oracle_mcp | Oracle MCP | Read-only connector | Source-described |
+| oracle | NCTSITE Oracle ADB | ODP.NET / Oracle Net | Source-described |
+| workflow | Workflow | EKC stage HTTP client | Source-described |
+| stage_targets | Ingestion / Compiler | Publisher | 3 INBOUND-ONLY HOSTS |
+| knowledge | Knowledge | Published bundle registry | Source-described |
+| publisher | Publisher | HTTP /publish | INBOUND ONLY |
+| model_clients | Chat / Models | Chat calls in-process; no Models pod hop | 2 DIRECT PROVIDER CLIENTS |
+| provider | Model provider | Provider HTTPS API | Source-described |
 
 ## Relationships
 
 | From -> to | Meaning | Scope |
 |---|---|---|
-| runtime -> oracle-mcp | HTTP / MCP | Relationship as labeled |
-| oracle-mcp -> oracle | 1522 / mTLS | Relationship as labeled |
-| runtime -> temporal | gRPC / TLS | Relationship as labeled |
-| workflow -> temporal | gRPC / TLS | Relationship as labeled |
-| workflow -> ekc-stages | HTTP / EKC | Relationship as labeled |
-| chat -> model-core | in-process | In-process governed call |
-| model-core -> provider | HTTPS | Relationship as labeled |
+| web -> browser_bff | HTTPS | Relationship as labeled |
+| bff -> bff_targets | HTTP/JSON / mesh | Relationship as labeled |
+| pg_clients -> postgres | SQL / TLS :5432 | Relationship as labeled |
+| redis_clients -> redis | RESP / TCP | Relationship as labeled |
+| temporal_clients -> temporal | gRPC / TLS | Relationship as labeled |
+| runtime -> oracle_mcp | HTTP / MCP | Relationship as labeled |
+| oracle_mcp -> oracle | 1522 / mTLS | Relationship as labeled |
+| workflow -> stage_targets | HTTP / mesh | Relationship as labeled |
+| knowledge -> publisher | HTTP / mesh | Relationship as labeled |
+| model_clients -> provider | HTTPS | Relationship as labeled |
 
 ## Evidence and Limits
 
-- Models.Core denotes a library within the Chat process, not the separately deployed Models host. Policy enforcement also need not be a network hop.
-- Workflow calls the Ingestion, Compiler and Publisher hosts. Grouping these endpoints does not imply they call each other directly. Knowledge also calls Publisher, as recorded in the source table.
-- The source lists PostgreSQL clients in BFF, API, Chat, Runtime, Workflow, Context, Knowledge, Memory and Oracle MCP. It lists Redis clients in AG-UI Web, API, Chat and Context. These dependencies are retained in the source excerpt rather than added as crossing arrows.
-- The Models host also has a provider connection according to the source. This focused view does not assert that it executes Chat's requests remotely.
-- The source says only Runtime and Workflow connect to Temporal. This is a statement attributed to the source, not a new exhaustive code or live-traffic verification.
-- Future real Work Order writes are not part of the read-only Oracle path. No live NCTSite write capability is certified here.
+- Each lane represents every named caller connecting to every named target in that lane. Repeated names refer to the same component, not additional deployments. The companion expands all 30 links individually.
+- PostgreSQL has nine listed clients. API, Context and Knowledge use vector data; Chat uses conversation storage; Oracle MCP records dataset audit. Redis has four clients, including AG-UI Web.
+- Runtime and Workflow both connect to Temporal. Workflow calls Ingestion, Compiler and Publisher; Knowledge also calls Publisher. Those three stage hosts are inbound-only in the supplied table.
+- Chat and Models make separate direct HTTPS calls to the model provider. Chat's model execution is in-process: there is no Chat-to-Models pod hop. Policy is not an added network hop.
+- Service HTTP uses the Istio mesh with source-described sidecar mTLS. Oracle uses ODP.NET / Oracle Net on TCP 1522 with wallet mTLS. These are source assertions, not newly measured live connections.
+- Complete means complete against section 3 of this source snapshot, not against every possible application integration. The existing selected-path diagrams remain available.
 
 ## Source Snapshot
 

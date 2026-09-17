@@ -1,8 +1,8 @@
 # NCT-AI / Telekom Component Map
 
-[Diagram index](index.md) | [Interactive HTML](01-component-map.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/b83199798e25d1312f5fff95a36db386f72bb326/design/Prerequisites/diagram-lab/telekom-components/specs/01-component-map.json)
+[Diagram index](index.md) | [Interactive HTML](01-component-map.html) | [JSON specification](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Prerequisites/diagram-lab/telekom-components/specs/01-component-map.json)
 
-**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/b83199798e25d1312f5fff95a36db386f72bb326/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 1. Snapshot: 2026-09-17.
+**Source:** [Telekom components overview](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md), sections 1. Snapshot: 2026-09-17.
 
 **View:** Inventory. All 15 application components, grouped by role rather than presented as a mandatory request chain.
 
@@ -83,26 +83,28 @@ The following excerpt is attributed to the source document, not newly verified l
 
 Telekom's pilot covers **every** component (no use case is excluded):
 
-| Layer             | Component             | Role for Telekom                                              |
-| ----------------- | --------------------- | ------------------------------------------------------------- |
-| **Experience**    | AG-UI (BFF)           | Backend-for-frontend — calls Runtime, Workflow, Knowledge, Chat, Models and API directly, each for its own concern |
-|                   | AG-UI (Web)           | Engineer-facing console — the surface Telekom staff use       |
+
+| Layer             | Component             | Role for Telekom                                                                                                                              |
+| ----------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Experience**    | AG-UI (BFF)           | Backend-for-frontend — calls Runtime, Workflow, Knowledge, Chat, Models and API directly, each for its own concern                            |
+|                   | AG-UI (Web)           | Engineer-facing console — the surface Telekom staff use                                                                                       |
 |                   | API                   | Agent/run management surface (create, review, approve, cancel) — one of several backends AG-UI calls, not a gateway everything passes through |
-|                   | Chat                  | Conversational entry point, governed tool-calling — executes its own model calls in-process |
-| **Agent Runtime** | Runtime               | Executes agents (including PoTP/MUX recommendations)          |
-|                   | Workflow              | Hosts/exposes the Temporal workflow definitions to the rest of the platform |
-|                   | Policy                | Governance rule library, consumed **in-process** by other hosts — not a network hop every action crosses |
-|                   | Context               | Assembles what an agent is allowed to see                     |
-| **Knowledge**     | Knowledge             | Registry of published knowledge bundles                       |
-|                   | Compiler              | Turns Telekom's raw sources into OKF bundles                  |
-|                   | Ingestion             | Pulls/normalizes Telekom's source material                    |
-|                   | Publisher             | Publishes approved bundles for use                            |
-| **Memory**        | Memory                | Cognitive memory capabilities (semantic/episodic) — chat conversation history is Chat's own store, not routed through here |
-| **Models**        | Models                | Model routing/accounting — model provider is Telekom's choice |
-| **Integration**   | Oracle MCP            | Governed, read-only access to NCTSite's Oracle data           |
-| **Orchestration** | Temporal              | Durable workflows — retries, human approvals                  |
-| **Data tier**     | PostgreSQL + pgvector | Relational + vector + graph store (single instance)           |
-|                   | Redis                 | Cache, session state                                          |
+|                   | Chat                  | Conversational entry point, governed tool-calling — executes its own model calls in-process                                                   |
+| **Agent Runtime** | Runtime               | Executes agents (including PoTP/MUX recommendations)                                                                                          |
+|                   | Workflow              | Hosts/exposes the Temporal workflow definitions to the rest of the platform                                                                   |
+|                   | Policy                | Governance rule library, consumed **in-process** by other hosts — not a network hop every action crosses                                      |
+|                   | Context               | Assembles what an agent is allowed to see                                                                                                     |
+| **Knowledge**     | Knowledge             | Registry of published knowledge bundles                                                                                                       |
+|                   | Compiler              | Turns Telekom's raw sources into OKF bundles                                                                                                  |
+|                   | Ingestion             | Pulls/normalizes Telekom's source material                                                                                                    |
+|                   | Publisher             | Publishes approved bundles for use                                                                                                            |
+| **Memory**        | Memory                | Cognitive memory capabilities (semantic/episodic) — chat conversation history is Chat's own store, not routed through here                    |
+| **Models**        | Models                | Model routing/accounting — model provider is Telekom's choice                                                                                 |
+| **Integration**   | Oracle MCP            | Governed, read-only access to NCTSite's Oracle data                                                                                           |
+| **Orchestration** | Temporal              | Durable workflows — retries, human approvals                                                                                                  |
+| **Data tier**     | PostgreSQL + pgvector | Relational + vector + graph store (single instance)                                                                                           |
+|                   | Redis                 | Cache, session state                                                                                                                          |
+
 
 ⚠️ **15 Deployments does not mean 15 network hops on every business
 action.** Some rows above are libraries consumed **in-process** by the

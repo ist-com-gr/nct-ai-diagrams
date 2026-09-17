@@ -1,8 +1,8 @@
 # NCT-AI / Telekom Components
 
-[Open interactive index](index.html) | [Source overview](https://github.com/ist-com-gr/NCT-AI/blob/b83199798e25d1312f5fff95a36db386f72bb326/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md)
+[Open interactive index](index.html) | [Source overview](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Components/NCT-AI_Components_Overview_Telekom_2026-09-17.md)
 
-Eight English-only views derived from the 2026-09-17 overview. These are document-based diagrams, not new infrastructure measurements or compliance certification.
+Nine English-only views derived from the 2026-09-17 overview, including the complete section 3 communication map. These are document-based diagrams, not new infrastructure measurements or compliance certification.
 
 | View | Topic | Interactive HTML | Markdown |
 |---|---|---|---|
@@ -14,6 +14,7 @@ Eight English-only views derived from the 2026-09-17 overview. These are documen
 | 06 | Installation decisions | [Decision dependencies](06-installation-decisions.html) | [Text diagram](06-installation-decisions.md) |
 | 07 | NIS2 use-case controls | [Governance model](07-nis2-controls.html) | [Text diagram](07-nis2-controls.md) |
 | 08 | GDPR data scope | [Governance model](08-gdpr-data-scope.html) | [Text diagram](08-gdpr-data-scope.md) |
+| 09 | Complete component communications | [Complete communication map](09-complete-communications.html) | [Text diagram](09-complete-communications.md) |
 
 ## Scope
 
@@ -31,4 +32,4 @@ ARCHIFY_CLI=/path/to/archify/bin/archify.mjs node design/Prerequisites/diagram-l
 node design/Prerequisites/diagram-lab/telekom-components/tools/verify.mjs --browser
 ```
 
-Specifications are authored in specs/. The catalog owns explanations; generation does not overwrite diagram geometry. Receipts and screenshots live in .verification/. Delivery, browser checks and perceptual review are separate evidence. See [verification summary](https://github.com/ist-com-gr/NCT-AI/blob/b83199798e25d1312f5fff95a36db386f72bb326/design/Prerequisites/diagram-lab/telekom-components/.verification/summary.json) after completion.
+Specifications are authored in specs/. The catalog owns explanations; generation does not overwrite diagram geometry. Receipts and screenshots live in .verification/. Delivery, browser checks and perceptual review are separate evidence. See [verification summary](https://github.com/ist-com-gr/NCT-AI/blob/889128d85af7dcf478c9651e89df05d1288ec825/design/Prerequisites/diagram-lab/telekom-components/.verification/summary.json) after completion.
